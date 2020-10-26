@@ -74,10 +74,6 @@ def save(fname, *args):
                     return int(data)
                 return data
 
-        def default(self, obj):
-            if hasattr(obj,'__dict__'):
-                tag = f'__{obj.__class__.__module__}.{obj.__class__.__name__}__'
-                return {tag: self._encode(obj.__dict__)}
                 
         def encode(self, obj):
             return super(Encoder, self).encode(self._encode(obj))
