@@ -9,11 +9,13 @@ def get_crc32(b):
 class BisonError(Exception):
     pass
 
-from .io import *
-from .decoder import Decoder
-
 __all__ = ['get_crc32','BisonError']
+
+from .io import *
 __all__.extend(io.__all__)
+
+from .decoder import Decoder
 __all__.extend(decoder.__all__)
 
-__version__ = '0.1.0'
+from .version import __version__, __version_full__
+__all__.extend(['__version__'])
