@@ -23,4 +23,4 @@ jobs:
         with:
           path: doc
           doc-branch: 'documentation'
-	  pypackages: 'sphinx_press_theme'
+          pypackages: 'sphinx_press_theme nbsphinx IPython pandoc'
