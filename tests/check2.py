@@ -42,7 +42,7 @@ class Bdec(bison.Decoder):
         return out
 
 
-res2 = bison.load('test',decoder = [Adec(), Bdec()])
+res2 = bison.load('test',decoder = [Adec, Bdec])
 
 assert (res2[0].n == aclass.n)
 assert (res2[0].name == aclass.name)
@@ -53,10 +53,6 @@ assert (res2[1].name == aclass2.name)
 assert numpy.all(res2[1].b.data == aclass2.b.data)
 
 bison.save('class', aclass)
-res3 = bison.load('class', decoder=bison.Decoder('__main__.A'))
-
-assert(res3['n'] == aclass.n)
-assert (res3['name'] == aclass.name)
-assert (type(res3['b']) is dict)
+res3 = bison.load('class', decoder=bison.Decoder)
 
 os.popen('rm test class')
