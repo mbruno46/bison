@@ -11,6 +11,7 @@ class A:
         self.n = n
         self.name = 'a class'
         self.b = B(self.n)
+        self.data0 = numpy.random.rand(4)
         
     def __call__(self):
         return numpy.sum(self.b.data)
