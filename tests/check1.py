@@ -24,4 +24,9 @@ try:
 except bison.BisonError:
     print('error caugth')
 
+try:
+    bison.load('test22')
+except bison.BisonError:
+    print('error caugth')
+
 os.popen('rm test1')
