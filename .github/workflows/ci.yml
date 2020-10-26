@@ -37,7 +37,7 @@ jobs:
         cd tests
         for f in `ls *py`
         do
-          ~/Physics/ipython3-env/bin/coverage run -p --source bison $f
+          coverage run -p --source bison $f
         done
         
     - name: Coverage report
