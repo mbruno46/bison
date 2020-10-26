@@ -3,8 +3,11 @@ bison |release|
 
 A file format which combines the portability of JSON with the performance of binary IO.
 
+The source code is hosted on `Github <https://github.com/mbruno46/bison>`__.
+
 The philosophy
 --------------
+
 
 The file format is a combination of a header file written in JSON format, followed by streams of bytes.
 The design of the package, written primarily for Python, has been driven by a few simple concepts:
@@ -23,10 +26,13 @@ Authors
 
 Copyright (C) 2020, Mattia Bruno
 
+Tutorials
+---------
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+
+   tutorial1
 
 
 Indices and tables
