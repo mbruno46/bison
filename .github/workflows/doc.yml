@@ -18,6 +18,11 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v2
 
+      - name: to removed 
+        run: |
+          pwd
+          ls bison
+
       - name: Deploy
         uses: mbruno46/deploy-sphinx-doc@v0.1
         with:
