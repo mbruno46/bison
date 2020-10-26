@@ -16,9 +16,9 @@ class A:
         return numpy.sum(self.b.data)
     
 aclass = A(45)
-aclass2 = A(100)
+array = numpy.random.rand(128)
 
-bison.save('test',aclass, aclass2)
+bison.save('test',aclass, array)
 
 res1 = bison.load('test')
 print('Reading a class without decoder', res1)
@@ -48,11 +48,14 @@ assert (res2[0].n == aclass.n)
 assert (res2[0].name == aclass.name)
 assert numpy.all(res2[0].b.data == aclass.b.data)
 
-assert (res2[1].n == aclass2.n)
-assert (res2[1].name == aclass2.name)
-assert numpy.all(res2[1].b.data == aclass2.b.data)
+assert numpy.all(res2[1] == array)
 
 bison.save('class', aclass)
-res3 = bison.load('class', decoder=bison.Decoder)
+
+class empty_dec(bison.Decoder):
+    def __init__(self):
+        super().__init__('__main__.A')
+        
+res3 = bison.load('class', decoder=empty_dec)
 
 os.popen('rm test class')

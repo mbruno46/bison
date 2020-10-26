@@ -22,7 +22,7 @@
 __all__ = ['Decoder']
 
 class Decoder:
-    def __init__(self, t=None):
+    def __init__(self, t):
         self.type = t
         
     def decode(self, obj):
