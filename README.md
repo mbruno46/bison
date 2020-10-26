@@ -1,5 +1,7 @@
 
+[![Build/Test](https://github.com/mbruno46/bison/workflows/Build/Test/badge.svg)](https://github.com/mbruno46/bison/actions?query=workflow%3ABuild%2FTest)
 ![Build Doc](https://github.com/mbruno46/bison/workflows/Build%20Doc/badge.svg)
+[![codecov](https://codecov.io/gh/mbruno46/bison/branch/master/graph/badge.svg)](https://codecov.io/gh/mbruno46/bison)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
 # bison - BInary jSON
