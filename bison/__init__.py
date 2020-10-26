@@ -15,3 +15,5 @@ from .decoder import Decoder
 __all__ = ['get_crc32','BisonError']
 __all__.extend(io.__all__)
 __all__.extend(decoder.__all__)
+
+__version__ = '0.1.0'
