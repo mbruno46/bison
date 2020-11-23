@@ -29,13 +29,24 @@ def get_crc32(b):
 class BisonError(Exception):
     pass
 
+verbose = True
+
+def message(msg):
+    if verbose:
+        print(f'[Bison] : {msg}')
+
 __all__ = ['get_crc32','BisonError']
 
-from .io import *
-__all__.extend(io.__all__)
+from .encoder import Encoder
 
 from .decoder import Decoder
 __all__.extend(decoder.__all__)
 
 from .version import __version__, __version_full__
 __all__.extend(['__version__'])
+
+from .io_single import *
+__all__.extend(io_single.__all__)
+
+from .io_multi import *
+__all__.extend(io_multi.__all__)

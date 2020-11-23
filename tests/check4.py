@@ -19,9 +19,12 @@ class A:
 aclass = A(45)
 array = numpy.random.rand(128)
 
-bison.save('test',aclass, array)
+f = bison.FILE('test4', mode='w')
+f.write('aclass', aclass)
+f.write('array', array)
 
-res1 = bison.load('test')
+ff = bison.FILE('test4', mode='r')
+res1 = ff.read()
 print('Reading a class without decoder', res1)
 
 
@@ -42,13 +45,12 @@ class Bdec:
         out.data = obj['data']
         return out
 
+res2 = ff.read(decoder = [Adec, Bdec])
 
-res2 = bison.load('test',decoder = [Adec, Bdec])
+assert (res2['aclass'].n == aclass.n)
+assert (res2['aclass'].name == aclass.name)
+assert numpy.all(res2['aclass'].b.data == aclass.b.data)
 
-assert (res2[0].n == aclass.n)
-assert (res2[0].name == aclass.name)
-assert numpy.all(res2[0].b.data == aclass.b.data)
+assert numpy.all(res2['array'] == array)
 
-assert numpy.all(res2[1] == array)
-
-os.popen('rm test class')
+os.popen('rm test4')

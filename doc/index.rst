@@ -21,6 +21,16 @@ The design of the package, written primarily for Python, has been driven by a fe
 
 The package is primarily designed for Python, but MATLAB/Octave interpreters will be added in future versions.
 
+Features
+--------
+
+The library supports two file formats
+
+* `single file`: in this case the header is written at the beginnig of the file, which can be written and loaded from disk with two single calls.
+
+* `sequential`: in this case the library creates a new temporary directory with two separate files, a header and a data file. This mode allows for sequential writing, e.g. when all the data to be written to disk is not known at once, but obtained through sequential calculations. The directory can be kept or brought into single file format very easily.
+
+
 Authors
 -------
 
@@ -33,6 +43,7 @@ Tutorials
    :maxdepth: 2
 
    tutorial1
+   tutorial2
 
 
 Indices and tables
