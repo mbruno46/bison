@@ -131,7 +131,7 @@ class FILE:
         return res['data']
     
 
-    def close(self, dest=None):
+    def close(self, dest=None, keep=False):
         if self.reading:
             pass
         
@@ -142,6 +142,7 @@ class FILE:
             dst = self.fname
         else:
             dst = dest
+            keep=True
             
         with open(dst, 'wb') as f:
             f.write(n.to_bytes(4, 'little'))
@@ -153,4 +154,5 @@ class FILE:
                 n += len(bb)
                 f.write(bb)
         
-        os.popen(f'rm -r {self.path}')
+        if not keep:
+            os.popen(f'rm -r {self.path}')

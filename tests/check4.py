@@ -53,4 +53,5 @@ assert numpy.all(res2['aclass'].b.data == aclass.b.data)
 
 assert numpy.all(res2['array'] == array)
 
+f.close()
 os.popen('rm test4')
