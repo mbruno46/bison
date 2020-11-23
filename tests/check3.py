@@ -27,6 +27,17 @@ for field in all:
     assert numpy.all(field == res[f'tag{k}'])
     k+=1
 
+    
+f3 = bison.FILE('test33',mode='r')
+res = f3.read()
+
+k=0
+for field in all:
+    assert numpy.all(field == res[f'tag{k}'])
+    k+=1
+    
+f3.close()
+
 try:
     bison.FILE('test3', mode='w')
 except bison.BisonError:
@@ -52,6 +63,11 @@ try:
 except bison.BisonError:
     print('error caugth')    
 
+try:
+    f.write('tag0', 3.14)
+except bison.BisonError:
+    print('error caugth')    
+    
 f.close()
 f2.close()
 

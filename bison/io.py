@@ -72,7 +72,9 @@ class FILE:
             
         if tag in self.tags:
             raise bison.BisonError(f'Tag {tag} already used')
-        
+        else:
+            self.tags.append(tag)
+            
         enc = bison.encoder.Encoder(indent=0)
 
         header = strip(enc.encode({tag: data}))
@@ -133,7 +135,7 @@ class FILE:
 
     def close(self, dest=None, keep=False):
         if self.reading:
-            pass
+            return
         
         header = '{\n' + open(self.head, 'r').read()[:-2] + '\n}\n}'
         n = len(header)
