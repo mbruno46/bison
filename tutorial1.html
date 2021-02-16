@@ -1,0 +1,732 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Getting started &#8212; bison version 0.2.0</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sequential writing" href="tutorial2.html" />
+    <link rel="prev" title="bison 0.2.0" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tutorial2.html" title="Sequential writing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="bison 0.2.0"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">bison version 0.2.0</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Getting started</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Getting-started">
+<h1>Getting started<a class="headerlink" href="#Getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">bison</span>
+</pre></div>
+</div>
+</div>
+<p>We create some random data using basic types</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">alist</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">atuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">astr</span> <span class="o">=</span> <span class="s1">&#39;hello there&#39;</span>
+<span class="n">alist2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="o">+</span><span class="mf">1.2</span><span class="n">j</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="o">.</span><span class="mi">45687</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>We save all this data together in a single file using <code class="docutils literal notranslate"><span class="pre">bison</span></code> and check it</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">bison</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;testfile.dat&#39;</span><span class="p">,</span> <span class="n">alist</span><span class="p">,</span> <span class="n">atuple</span><span class="p">,</span> <span class="n">astr</span><span class="p">,</span> <span class="n">alist2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Bison] : Written 0.000639915 MB at 0.977066 MB/s
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>ls -al testfile.dat
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+-rw-r--r--  1 mbruno  staff  671 Nov 23 17:19 testfile.dat
+</pre></div></div>
+</div>
+<p>Let’s reload the data from the saved file.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">bison</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;testfile.dat&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Bison] : Reading file testfile.dat
+[Bison] : File created by mbruno at macthxbruno.local on Mon Nov 23 17:19:34 2020
+[Bison] : Read 0.000639915 MB at 2.0135 MB/s
+</pre></div></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">data</span></code> is a <code class="docutils literal notranslate"><span class="pre">list</span></code> whose elements correspond to the elements originally passed to <code class="docutils literal notranslate"><span class="pre">bison.save</span></code>. The order is preserved!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[3, 4, 5], (5, 6, 7), &#39;hello there&#39;, [(5+1.2j), 6, 0.45687]]
+</pre></div></div>
+</div>
+<div class="section" id="numpy-arrays,-where-the-fun-begins">
+<h2>numpy arrays, where the fun begins<a class="headerlink" href="#numpy-arrays,-where-the-fun-begins" title="Permalink to this headline">¶</a></h2>
+<p>The package is designed to optimize IO performances with large datasets, stored as <code class="docutils literal notranslate"><span class="pre">numpy.array</span></code>. Note that <strong>only</strong> the content of numpy arrays is stored in binary format.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="c1"># a simple array of integers</span>
+<span class="n">arr1</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">450</span><span class="p">)</span>
+
+<span class="c1"># we change the format</span>
+<span class="n">arr2</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">9000</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;i4&#39;</span><span class="p">)</span>
+
+<span class="c1"># complex and arbitrary shape</span>
+<span class="n">Na</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">tmp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">Na</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">arr3</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="nb">complex</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span><span class="mf">1.</span><span class="p">)</span><span class="o">*</span><span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">arr3</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">arr3</span><span class="p">,</span> <span class="p">(</span><span class="n">Na</span><span class="p">,</span><span class="mi">1000</span><span class="p">))</span>
+
+<span class="n">bison</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;arrays&#39;</span><span class="p">,</span><span class="n">arr1</span><span class="p">,</span><span class="n">arr2</span><span class="p">,</span><span class="n">arr3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Bison] : Written 3.92557 MB at 2325.57 MB/s
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">res</span> <span class="o">=</span> <span class="n">bison</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;arrays&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Bison] : Reading file arrays
+[Bison] : File created by mbruno at macthxbruno.local on Mon Nov 23 17:19:34 2020
+[Bison] : Read 3.92557 MB at 1567.5 MB/s
+</pre></div></div>
+</div>
+<p>Note how the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of numpy arrays is preserved, as well as their shape.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">res</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+int32
+(256, 1000) complex128
+</pre></div></div>
+</div>
+<div class="section" id="tag-fields-via-dictionaries">
+<h3>tag fields via dictionaries<a class="headerlink" href="#tag-fields-via-dictionaries" title="Permalink to this headline">¶</a></h3>
+<p>When we use <code class="docutils literal notranslate"><span class="pre">bison.save</span></code> the name of the field is lost and the user has to remember the order in which the various arguments where passed. Dictionaries are the elegant way to circumvent this problem</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">d</span><span class="p">[</span><span class="s1">&#39;myarray1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr1</span>
+<span class="n">d</span><span class="p">[</span><span class="s1">&#39;mycomplexarray&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr3</span>
+<span class="n">d</span><span class="p">[</span><span class="s1">&#39;alist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">alist</span>
+<span class="n">d</span><span class="p">[</span><span class="s1">&#39;nested&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;atuple&#39;</span><span class="p">:</span> <span class="n">atuple</span><span class="p">,</span> <span class="s1">&#39;myarr2&#39;</span><span class="p">:</span> <span class="n">arr2</span><span class="p">}</span>
+
+<span class="n">bison</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;arrays_with_dict&#39;</span><span class="p">,</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Bison] : Written 3.92599 MB at 1461.12 MB/s
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">res</span> <span class="o">=</span> <span class="n">bison</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;arrays_with_dict&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Bison] : Reading file arrays_with_dict
+[Bison] : File created by mbruno at macthxbruno.local on Mon Nov 23 17:19:34 2020
+[Bison] : Read 3.92599 MB at 2309.51 MB/s
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+dict_keys([&#39;myarray1&#39;, &#39;mycomplexarray&#39;, &#39;alist&#39;, &#39;nested&#39;])
+</pre></div></div>
+</div>
+<p>Using dictionaries naturally allows hierarchical storage</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">res</span><span class="p">[</span><span class="s1">&#39;nested&#39;</span><span class="p">][</span><span class="s1">&#39;myarr2&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([1000, 1002, 1004, ..., 8994, 8996, 8998], dtype=int32)
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="custom-classes">
+<h2>custom classes<a class="headerlink" href="#custom-classes" title="Permalink to this headline">¶</a></h2>
+<p>Clearly this library would be incomplete if it did not support user-defined classes!</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">*</span><span class="n">m</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;numbers = &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">numbers</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">aclass</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span><span class="mf">6.789</span><span class="p">)</span>
+<span class="n">aclass</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+numbers =  [45, 6.789]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">bison</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;classes&#39;</span><span class="p">,</span><span class="n">aclass</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Bison] : Written 0.000396729 MB at 0.768591 MB/s
+</pre></div></div>
+</div>
+<p>If we use <code class="docutils literal notranslate"><span class="pre">bison.load</span></code> in the simplest way the returned object is not the class <code class="docutils literal notranslate"><span class="pre">A</span></code>, but a dictionary with the fields of the class that we originally passed.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">res</span> <span class="o">=</span> <span class="n">bison</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;classes&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">result from reading === &#39;</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Bison] : Reading file classes
+[Bison] : File created by mbruno at macthxbruno.local on Mon Nov 23 17:19:34 2020
+[Bison] : Read 0.000396729 MB at 0.536774 MB/s
+
+result from reading ===  {&#39;____main__.A__&#39;: {&#39;n&#39;: 305.505, &#39;numbers&#39;: [45, 6.789]}}
+</pre></div></div>
+</div>
+<p>In order to interpret the dictionary as our class we need to instruct bison. To do so we simply need to construct a class that we will pass to <code class="docutils literal notranslate"><span class="pre">bison.load</span></code> as additional input!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">class</span> <span class="nc">decodeA</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="s1">&#39;__main__.A&#39;</span> <span class="c1"># here we must initialize the class with the module.name of the class</span>
+
+    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;numbers&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;numbers&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">res2</span> <span class="o">=</span> <span class="n">bison</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;classes&#39;</span><span class="p">,</span> <span class="n">decoder</span><span class="o">=</span><span class="n">decodeA</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Bison] : Reading file classes
+[Bison] : File created by mbruno at macthxbruno.local on Mon Nov 23 17:19:34 2020
+[Bison] : Read 0.000396729 MB at 0.584886 MB/s
+</pre></div></div>
+</div>
+<p>If our decoder has been properly interpreted the dictionary then <code class="docutils literal notranslate"><span class="pre">res2</span></code> should be a fully fledged class of type <code class="docutils literal notranslate"><span class="pre">A</span></code> including its methods. Let’s try</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">res2</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+numbers =  [45, 6.789]
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># final clean up</span>
+<span class="o">!</span>rm testfile.dat arrays arrays_with_dict classes
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting started</a><ul>
+<li><a class="reference internal" href="#numpy-arrays,-where-the-fun-begins">numpy arrays, where the fun begins</a><ul>
+<li><a class="reference internal" href="#tag-fields-via-dictionaries">tag fields via dictionaries</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#custom-classes">custom classes</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tutorial2.html" title="Sequential writing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="bison 0.2.0"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">bison version 0.2.0</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Getting started</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Mattia Bruno.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.1.
+    </div>
+  </body>
+</html>
