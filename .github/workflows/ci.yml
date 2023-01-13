@@ -13,18 +13,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.6,3.7,3.8]
+        python-version: [3.7,3.8,'3.10']
 
     steps: 
 
     - name: Setup python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
         architecture: x64
 
     - name: Clone repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Install dependencies
       run: |
@@ -48,7 +48,7 @@ jobs:
         coverage xml  # Export coverage report as XML file, for codecov.i
 
     - name: Upload coverage to Codecov
-      if: ${{ matrix.python-version }} == 3.6
+      if: ${{ matrix.python-version }} == 3.8
       env:
         PYTHON_VERSION: python${{ matrix.python-version }}
         CODECOV_TOKEN: "9196406c-1ed0-4ce5-b14d-f53d8810c704"
