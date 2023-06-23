@@ -14,4 +14,5 @@ def version():
 setup(
     name='bison',
     version=version(),
+    packages=find_packages(include=['bison*']),
 )
