@@ -28,7 +28,7 @@ The package is primarily designed for Python, but MATLAB/Octave interpreters wil
 
 ### Authors
 
-Copyright (C) 2020, Mattia Bruno
+Copyright (C) 2020-2023, Mattia Bruno
 
 ## Installation
 

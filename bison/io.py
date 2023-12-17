@@ -1,7 +1,7 @@
 #################################################################################
 #
 # io_multi.py
-# Copyright (C) 2020 Mattia Bruno
+# Copyright (C) 2020-2023 Mattia Bruno
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -62,6 +62,14 @@ class FILE:
                 f.write(header[:-1] + '\n')
             
             self.tags = ['www']
+        elif mode == 'a':
+            self.reading = False
+            if not os.path.isfile(self.head) and not os.path.isfile(self.data):
+                raise bison.BisonError(f'File {fname} does not exist')
+            
+            header = '{\n' + open(self.head, 'r').read()[:-2] + '\n}\n}'
+            res = json.loads(header)
+            self.tags = ['www'] + list(res['data'].keys())            
         else:
             raise bison.BisonError(f'Unexpected mode')
 
