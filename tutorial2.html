@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Sequential writing &#8212; bison version 0.2.2</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=0a676766" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=64d7028f"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Getting started" href="tutorial1.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tutorial1.html" title="Getting started"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">bison version 0.2.2</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Sequential writing</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="Sequential-writing">
+<h1>Sequential writing<a class="headerlink" href="#Sequential-writing" title="Permalink to this heading">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">bison</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+</pre></div>
+</div>
+</div>
+<p>Let’s initialize an empty bison file in writing mode</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">bison</span><span class="o">.</span><span class="n">FILE</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Let’s write some data into our bison file. To do so we simply invoke the ‘write’ method of the ‘FILE’ class with an additional string, namely a unique tag, to label the content of the data</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="mi">96</span>
+<span class="n">Nc</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span><span class="n">T</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;ncorr&#39;</span><span class="p">,</span> <span class="n">Nc</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;desc&#39;</span><span class="p">,</span> <span class="s1">&#39;a string describing the data&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Bison] : T with 6.67572e-06 MB written at 0.00735101 MB/s
+[Bison] : ncorr with 9.53674e-06 MB written at 0.0123191 MB/s
+[Bison] : desc with 3.62396e-05 MB written at 0.0784719 MB/s
+</pre></div></div>
+</div>
+<p>We imagine to have a function which performs a calculation that takes long time</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_func</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">96</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">96</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>For each instance of the calculation we write to disk the results in the bison FILE</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]:</span>
+    <span class="n">dat</span> <span class="o">=</span> <span class="n">test_func</span><span class="p">(</span><span class="n">Nc</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;calculation number </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">dat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Bison] : calculation number 0 with 0.00376701 MB written at 2.98226 MB/s
+[Bison] : calculation number 1 with 0.00376701 MB written at 5.90654 MB/s
+[Bison] : calculation number 2 with 0.00376701 MB written at 8.60098 MB/s
+[Bison] : calculation number 3 with 0.00376701 MB written at 8.70044 MB/s
+[Bison] : calculation number 4 with 0.00376701 MB written at 9.08046 MB/s
+</pre></div></div>
+</div>
+<p>The content of the file can be easily imported by opening a new FILE instance in reading mode</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ff</span> <span class="o">=</span> <span class="n">bison</span><span class="o">.</span><span class="n">FILE</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Bison] : Reading file test
+[Bison] : File created by mbruno at macthxbruno.lan on Sun Dec 17 22:34:36 2023
+[Bison] : Read 0.0190096 MB at 6.84865 MB/s
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="p">[</span><span class="s1">&#39;calculation number 4&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0.80225737, 0.70375386, 0.86465048, 0.63461449, 0.31462978,
+        0.28150328, 0.17274223, 0.89829944, 0.26021759, 0.92070715,
+        0.93058145, 0.7709853 , 0.17563447, 0.52415459, 0.02000619,
+        0.38554605, 0.52955647, 0.40984308, 0.09962975, 0.37436244,
+        0.55467646, 0.19462026, 0.89962351, 0.3074037 , 0.75241438,
+        0.56021382, 0.26279381, 0.14577777, 0.80576792, 0.81877911,
+        0.57445305, 0.32583625, 0.23597202, 0.59568577, 0.84252923,
+        0.67747952, 0.90982872, 0.37681215, 0.30209915, 0.73830714,
+        0.39338582, 0.1447888 , 0.66735443, 0.72381351, 0.10759572,
+        0.6670577 , 0.61345446, 0.8851517 , 0.43129965, 0.91745416,
+        0.89422255, 0.70943251, 0.22503525, 0.95082019, 0.53515326,
+        0.93862371, 0.79422065, 0.22322211, 0.89888103, 0.42680045,
+        0.58888113, 0.53487978, 0.04345715, 0.89563877, 0.50112214,
+        0.32274059, 0.46372345, 0.23870405, 0.9918967 , 0.53509232,
+        0.42231985, 0.1677092 , 0.09398063, 0.47433878, 0.81496847,
+        0.7407553 , 0.38115574, 0.73099402, 0.39123126, 0.26716362,
+        0.58416822, 0.45343461, 0.81777889, 0.74176854, 0.29597905,
+        0.98023188, 0.2139789 , 0.33440495, 0.13270772, 0.28991348,
+        0.57184929, 0.03082274, 0.33363724, 0.07324924, 0.16747129,
+        0.31170133],
+       [0.32477702, 0.08871615, 0.74041547, 0.26556977, 0.30959662,
+        0.54126898, 0.29194818, 0.40308135, 0.36091119, 0.71323146,
+        0.61245245, 0.96045216, 0.59411548, 0.45347129, 0.41770934,
+        0.00431228, 0.48417182, 0.95329877, 0.56459645, 0.14513071,
+        0.68675926, 0.89293455, 0.93990846, 0.77930177, 0.58684697,
+        0.75206469, 0.39464024, 0.90069164, 0.37235876, 0.5321414 ,
+        0.61230968, 0.03755855, 0.66712685, 0.76219759, 0.33532336,
+        0.06589711, 0.03091312, 0.15011797, 0.5223564 , 0.30104329,
+        0.15046059, 0.23855875, 0.19140968, 0.1368245 , 0.94932311,
+        0.26486518, 0.33188799, 0.70788565, 0.2742712 , 0.11629758,
+        0.54882706, 0.59399093, 0.01294608, 0.87674374, 0.90376518,
+        0.32473354, 0.87299667, 0.41114503, 0.93240533, 0.52470021,
+        0.39303979, 0.30649094, 0.18192338, 0.33684459, 0.6745814 ,
+        0.09265325, 0.27507279, 0.7286662 , 0.55223367, 0.43509594,
+        0.04284209, 0.19083739, 0.04803236, 0.03496756, 0.81543046,
+        0.17475651, 0.44180629, 0.83616678, 0.0113254 , 0.05381519,
+        0.46412965, 0.61251395, 0.15084196, 0.52148212, 0.93117526,
+        0.22792689, 0.46684977, 0.46455395, 0.58647109, 0.90232245,
+        0.32197611, 0.75673018, 0.79329165, 0.07135566, 0.55786823,
+        0.37454614],
+       [0.68941273, 0.88166418, 0.17510346, 0.46694283, 0.3346703 ,
+        0.496891  , 0.33268869, 0.00543128, 0.3037188 , 0.62708029,
+        0.81322213, 0.50089314, 0.54833555, 0.57633151, 0.73759315,
+        0.23437539, 0.17753689, 0.33675809, 0.38798625, 0.10020454,
+        0.13251788, 0.88203543, 0.65665137, 0.4330585 , 0.69936114,
+        0.89633741, 0.70884213, 0.72793067, 0.66086859, 0.17021864,
+        0.28759976, 0.69412217, 0.60705499, 0.89097402, 0.80987718,
+        0.58608517, 0.3591191 , 0.47408908, 0.76499358, 0.67700505,
+        0.99715005, 0.21540654, 0.37656122, 0.60666963, 0.48732829,
+        0.99090016, 0.72674123, 0.73744919, 0.33494393, 0.93607479,
+        0.8722198 , 0.25310952, 0.60675548, 0.50256412, 0.17147277,
+        0.91600644, 0.29541813, 0.76278439, 0.86113408, 0.73626512,
+        0.12961485, 0.88973864, 0.08316314, 0.79826892, 0.97336534,
+        0.28001798, 0.90913082, 0.87750321, 0.15944156, 0.10106463,
+        0.20488643, 0.1869575 , 0.55441144, 0.20344329, 0.87373522,
+        0.9991574 , 0.06719001, 0.05740322, 0.12480959, 0.55041771,
+        0.0172395 , 0.9523926 , 0.91699591, 0.66058735, 0.04875566,
+        0.26689746, 0.06805683, 0.08185401, 0.74441852, 0.39258413,
+        0.6739871 , 0.77936645, 0.05037824, 0.45411086, 0.55636203,
+        0.78249593],
+       [0.42035243, 0.48617916, 0.96832559, 0.52689738, 0.15014452,
+        0.12822378, 0.48390556, 0.21968535, 0.29433059, 0.24311261,
+        0.71804844, 0.19542301, 0.4586522 , 0.17150288, 0.81929147,
+        0.18799853, 0.89134314, 0.71904561, 0.86024855, 0.760205  ,
+        0.90019133, 0.96716014, 0.3281458 , 0.61370724, 0.37673959,
+        0.33946309, 0.15512666, 0.15945783, 0.65855695, 0.70600474,
+        0.23556959, 0.71786526, 0.90235071, 0.40117726, 0.22635211,
+        0.62014338, 0.6329245 , 0.86141893, 0.37917779, 0.14549712,
+        0.75069792, 0.96378996, 0.04227842, 0.0147467 , 0.24477258,
+        0.56006021, 0.4370452 , 0.36753222, 0.62917831, 0.74131358,
+        0.61744064, 0.50816029, 0.43074536, 0.86130894, 0.53748081,
+        0.41478662, 0.80924251, 0.20982661, 0.57952286, 0.83521349,
+        0.21815395, 0.24888376, 0.68414679, 0.9177001 , 0.0584529 ,
+        0.81334781, 0.86313851, 0.83584383, 0.84222703, 0.15782055,
+        0.59571456, 0.10155614, 0.79608955, 0.17474152, 0.1359657 ,
+        0.3028606 , 0.71178833, 0.67921302, 0.39182488, 0.47284611,
+        0.62759115, 0.51875363, 0.96148495, 0.23716344, 0.32891088,
+        0.81476516, 0.54489661, 0.2068437 , 0.67398713, 0.27661461,
+        0.13525128, 0.54166043, 0.43047649, 0.52039986, 0.71641096,
+        0.98514774],
+       [0.23264661, 0.93850971, 0.99375518, 0.44111234, 0.4748153 ,
+        0.67033981, 0.75070051, 0.4851183 , 0.52691697, 0.35119531,
+        0.24551543, 0.72195013, 0.10814154, 0.93793736, 0.82865399,
+        0.31310571, 0.21280989, 0.60373092, 0.30639013, 0.21526706,
+        0.64567471, 0.14134053, 0.08522514, 0.06687272, 0.45545353,
+        0.53535885, 0.71278533, 0.84778709, 0.76020065, 0.1336927 ,
+        0.56734936, 0.92294542, 0.59912705, 0.58310107, 0.61781494,
+        0.46714732, 0.02663121, 0.81128865, 0.74084481, 0.96109694,
+        0.14138198, 0.63237049, 0.76414256, 0.18774914, 0.90312844,
+        0.28050055, 0.93353065, 0.66069545, 0.62247818, 0.93101546,
+        0.25247141, 0.63456861, 0.50091329, 0.11482668, 0.75737217,
+        0.21795998, 0.94319259, 0.95980666, 0.36464547, 0.53314202,
+        0.32648171, 0.46139673, 0.1820662 , 0.24406688, 0.25195856,
+        0.14321296, 0.50468744, 0.13401868, 0.14223564, 0.81371678,
+        0.65597743, 0.02792731, 0.6099488 , 0.69994946, 0.60572373,
+        0.38035365, 0.68661268, 0.70067829, 0.01796582, 0.91001505,
+        0.01922333, 0.49335815, 0.5852    , 0.28185334, 0.07704783,
+        0.41197882, 0.00508123, 0.38862846, 0.24758404, 0.51536235,
+        0.83809337, 0.29822645, 0.49015167, 0.56295256, 0.84352966,
+        0.90342666]])
+</pre></div></div>
+</div>
+<p>At this point the bison FILE is still open, which means that no file has yet been created, but instead all data has been dumped into a temporary directory. Let’s check it, we should find a <code class="docutils literal notranslate"><span class="pre">test.temp</span></code> directory</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>ls<span class="w"> </span>-al<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>test
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+drwxr-xr-x   4 mbruno  staff    128 Dec 17 22:34 test.temp
+</pre></div></div>
+</div>
+<p>Now we can close the file and therefore also eliminate the possibility to further append to it, or we can close the file as is, to a new destination, thus leaving the possibility to append more data in the future.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">dest</span><span class="o">=</span><span class="s1">&#39;test2&#39;</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="o">!</span>ls<span class="w"> </span>-al<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>test
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+drwxr-xr-x   4 mbruno  staff    128 Dec 17 22:34 test.temp
+-rw-r--r--   1 mbruno  staff  19937 Dec 17 22:34 test2
+</pre></div></div>
+</div>
+<p>Now that a single file has been created, we can import it also with the standard loading command</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">bison</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;test2&#39;</span><span class="p">)</span>
+<span class="n">res</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Bison] : Reading file test2
+[Bison] : File created by mbruno at macthxbruno.lan on Sun Dec 17 22:34:36 2023
+[Bison] : Read 0.0190134 MB at 12.7536 MB/s
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+dict_keys([&#39;T&#39;, &#39;ncorr&#39;, &#39;desc&#39;, &#39;calculation number 0&#39;, &#39;calculation number 1&#39;, &#39;calculation number 2&#39;, &#39;calculation number 3&#39;, &#39;calculation number 4&#39;])
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># final clean up</span>
+<span class="o">!</span>rm<span class="w"> </span>-r<span class="w"> </span>test2
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># test append mode</span>
+<span class="n">fff</span> <span class="o">=</span> <span class="n">bison</span><span class="o">.</span><span class="n">FILE</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">fff</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span><span class="s1">&#39;new content here&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">BisonError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">/var/folders/dl/cbsy8n5x2sj_b22nmw4cz6x00000gn/T/ipykernel_59423/3303489673.py</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> fff <span class="ansi-blue-fg">=</span> bison<span class="ansi-blue-fg">.</span>FILE<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;test&#39;</span><span class="ansi-blue-fg">,</span> mode<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;a&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>fff<span class="ansi-blue-fg">.</span>write<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;T&#39;</span><span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">&#39;new content here&#39;</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/Physics/analysis/bison/bison/io.py</span> in <span class="ansi-cyan-fg">write</span><span class="ansi-blue-fg">(self, tag, data)</span>
+<span class="ansi-green-intense-fg ansi-bold">     80</span>
+<span class="ansi-green-intense-fg ansi-bold">     81</span>         <span class="ansi-green-fg">if</span> tag <span class="ansi-green-fg">in</span> self<span class="ansi-blue-fg">.</span>tags<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 82</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">raise</span> bison<span class="ansi-blue-fg">.</span>BisonError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;Tag {tag} already used&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     83</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">     84</span>             self<span class="ansi-blue-fg">.</span>tags<span class="ansi-blue-fg">.</span>append<span class="ansi-blue-fg">(</span>tag<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">BisonError</span>: Tag T already used
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fff</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;new&#39;</span><span class="p">,</span><span class="s1">&#39;new content here&#39;</span><span class="p">)</span>
+<span class="n">fff</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="o">!</span>ls<span class="w"> </span>-al<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>test
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[Bison] : new with 2.38419e-05 MB written at 0.0198491 MB/s
+-rw-r--r--   1 mbruno  staff  19964 Dec 17 22:34 test
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>rm<span class="w"> </span>test
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tutorial1.html" title="Getting started"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">bison version 0.2.2</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Sequential writing</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2020, Mattia Bruno.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>bison 0.2.2 &#8212; bison version 0.2.2</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=0a676766" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=64d7028f"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting started" href="tutorial1.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tutorial1.html" title="Getting started"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">bison version 0.2.2</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">bison 0.2.2</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="bison-release">
+<h1>bison 0.2.2<a class="headerlink" href="#bison-release" title="Permalink to this heading">¶</a></h1>
+<p>A file format which combines the portability of JSON with the performance of binary IO.</p>
+<p>The source code is hosted on <a class="reference external" href="https://github.com/mbruno46/bison">Github</a>.</p>
+<section id="the-philosophy">
+<h2>The philosophy<a class="headerlink" href="#the-philosophy" title="Permalink to this heading">¶</a></h2>
+<p>The file format is a combination of a header file written in JSON format, followed by streams of bytes.
+The design of the package, written primarily for Python, has been driven by a few simple concepts:</p>
+<ul class="simple">
+<li><p>portability and human readability of the JSON format,
+which allows to encode any structure, from simple
+basic types, such as lists, to complex custom-defined classes.</p></li>
+<li><p>the performance of binary for large datasets contained in a <cite>numpy.array</cite></p></li>
+</ul>
+<p>The package is primarily designed for Python, but MATLAB/Octave interpreters will be added in future versions.</p>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this heading">¶</a></h2>
+<p>The library supports two file formats</p>
+<ul class="simple">
+<li><p><cite>single file</cite>: in this case the header is written at the beginnig of the file, which can be written and loaded from disk with two single calls.</p></li>
+<li><p><cite>sequential</cite>: in this case the library creates a new temporary directory with two separate files, a header and a data file. This mode allows for sequential writing, e.g. when all the data to be written to disk is not known at once, but obtained through sequential calculations. The directory can be kept or brought into single file format very easily.</p></li>
+</ul>
+</section>
+<section id="authors">
+<h2>Authors<a class="headerlink" href="#authors" title="Permalink to this heading">¶</a></h2>
+<p>Copyright (C) 2020, Mattia Bruno</p>
+</section>
+<section id="tutorials">
+<h2>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial1.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial1.html#numpy-arrays,-where-the-fun-begins">numpy arrays, where the fun begins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial1.html#custom-classes">custom classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2.html">Sequential writing</a></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">bison 0.2.2</a><ul>
+<li><a class="reference internal" href="#the-philosophy">The philosophy</a></li>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#authors">Authors</a></li>
+<li><a class="reference internal" href="#tutorials">Tutorials</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tutorial1.html" title="Getting started"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">bison version 0.2.2</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">bison 0.2.2</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2020, Mattia Bruno.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    </div>
+  </body>
+</html>
